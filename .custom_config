@@ -1,0 +1,27 @@
+# Setting "External Mic" as standard PCM Capture Device
+amixer -c 1 sset 'PCM Capture Source' 'External Mic'
+
+# To load the above setting at startup create a .desktop file in ~/.config/autostart
+[Desktop Entry]
+Type=Application
+Name=Default Mic
+Exec=amixer -c 1 sset 'PCM Capture Source' 'External Mic'
+Comment=Used to set the Default PCM Capture Source to the External Mic of Soundblaster G6
+X-GNOME-Autostart-enabled=true
+
+# Uncomment following line in /etc/pulse/default.pa
+load-module module-role-cork
+# Then restart pulseaudio
+pulseaudio -k
+
+# Getting GDM (Gnome Display Manager) to display Login Prompt on primary display
+sudo cp ~/.config/monitors.xml ~gdm/.config/monitors.xml
+sudo chown gdm:gdm ~gdm/.config/monitors.xml
+
+# Remap the "Show Dock and application numbers" hotkey to Alt + Q
+# Change the following dconf-key to "'<Alt>q'":
+org.gnome.shell.extensions.dash-to-dock hot-keys
+
+# Add shortcut to show a specific application window
+sudo apt-get install wmctrl
+wmctrl -xa <windowname>
