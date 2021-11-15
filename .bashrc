@@ -1,4 +1,4 @@
-# ~/.bashrc: executed by bash(2) for non-login shells.
+# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -120,4 +120,6 @@ fi
 source ~/gitstatus/gitstatus.prompt.sh
 . "$HOME/.cargo/env"
 
-source ~/.reattach_main_tmux.sh
+# Reattach to main tmux session if available
+. ~/.reattach_main_tmux.sh
+
