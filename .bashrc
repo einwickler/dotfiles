@@ -1,4 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
+# ~/.bashrc: executed by bash(2) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -115,11 +115,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Enable Git status prompt
 source ~/gitstatus/gitstatus.prompt.sh
 . "$HOME/.cargo/env"
 
-# Start tmux if interactive session
-# If not running interactively, do not do anything
-[[ $- != *i* ]] && return
-# Otherwise start tmux
-[[ -z "$TMUX" ]] && exec tmux
+source ~/.reattach_main_tmux.sh
