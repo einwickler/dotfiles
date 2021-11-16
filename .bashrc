@@ -120,6 +120,4 @@ fi
 source ~/gitstatus/gitstatus.prompt.sh
 . "$HOME/.cargo/env"
 
-# Reattach to main tmux session if available
-. ~/.reattach_main_tmux.sh
 
