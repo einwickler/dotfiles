@@ -25,3 +25,12 @@ org.gnome.shell.extensions.dash-to-dock hot-keys
 # Add shortcut to show a specific application window
 sudo apt-get install wmctrl
 wmctrl -xa <windowname>
+
+# Setting pulseaudio to use the correct sampling rate of audio output
+pactl list short sinks # Get list auf audio outputs and sampling rates
+# Change values in /etc/pulseaudio/daemon.conf
+default-sample-rate = 44100
+avoid-resampling = true
+# Restart pulseaudio
+pulseaudio -k
+pulseaudio --start
