@@ -23,7 +23,7 @@ set ttyfast    " faster scrolling
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin()
- Plug 'dracula/vim'
+ Plug 'dracula/vim', {'as': 'dracula'}
  Plug 'ryanoasis/vim-devicons'
  Plug 'SirVer/ultisnips'
  Plug 'honza/vim-snippets'
@@ -39,12 +39,14 @@ call plug#begin()
 call plug#end()
 
 " color schemes
+set background=dark
 if (has("termguicolors"))
  set termguicolors
 endif
 syntax enable
 " colorscheme evening
-colorscheme dracula" open new split panes to right and below
+colorscheme dracula
+" open new split panes to right and below
 set splitright
 set splitbelow
 

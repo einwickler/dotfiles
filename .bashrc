@@ -120,4 +120,6 @@ fi
 source ~/gitstatus/gitstatus.prompt.sh
 . "$HOME/.cargo/env"
 
-
+# Dircolors setting for dracula
+eval `dircolors ~/Software/gnome-terminal-dracula-theme/dircolors` 
+TERM=xterm-256color
