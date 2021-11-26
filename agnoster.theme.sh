@@ -99,29 +99,35 @@ text_effect() {
 # under the "256 (8-bit) Colors" section, and follow the example for orange below
 fg_color() {
     case "$1" in
-        black)      echo 30;;
-        red)        echo 31;;
-        green)      echo 32;;
-        yellow)     echo 33;;
-        blue)       echo 34;;
-        magenta)    echo 35;;
-        cyan)       echo 36;;
-        white)      echo 37;;
-        orange)     echo 38\;5\;166;;
+        black)          echo 30;;
+        red)            echo 31;;
+        green)          echo 32;;
+        yellow)         echo 33;;
+        blue)           echo 34;;
+        magenta)        echo 35;;
+        cyan)           echo 36;;
+        white)          echo 37;;
+        orange)         echo 38\;5\;166;;
+        grey)           echo 38\;5\;236;;
+        draculagreen)   echo 38\;5\;84;;
+        draculapurple)  echo 38\;5\;61;;
     esac
 }
 
 bg_color() {
     case "$1" in
-        black)      echo 40;;
-        red)        echo 41;;
-        green)      echo 42;;
-        yellow)     echo 43;;
-        blue)       echo 44;;
-        magenta)    echo 45;;
-        cyan)       echo 46;;
-        white)      echo 47;;
-        orange)     echo 48\;5\;166;;
+        black)          echo 40;;
+        red)            echo 41;;
+        green)          echo 42;;
+        yellow)         echo 43;;
+        blue)           echo 44;;
+        magenta)        echo 45;;
+        cyan)           echo 46;;
+        white)          echo 47;;
+        orange)         echo 48\;5\;166;;
+        grey)           echo 48\;5\;236;;
+        draculagreen)   echo 48\;5\;84;;
+        draculapurple)  echo 48\;5\;61;;
     esac;
 }
 
@@ -200,17 +206,15 @@ prompt_end() {
         declare -a codes=($(text_effect reset) $(fg_color $CURRENT_BG))
         PR="$PR $(ansi codes[@])$SEGMENT_SEPARATOR"
     fi
+    prompt_color=$(fg_color draculagreen)
+    PR="$PR\n $(ansi prompt_color)$"
     declare -a reset=($(text_effect reset))
     PR="$PR $(ansi reset[@])"
     CURRENT_BG=''
 }
 
 prompt_linebreak() {
-  PR="\n$PR"
-}
-
-prompt_inputline() {
-  PR="$PR\n $ "
+  PR="$PR\n"
 }
 
 ### virtualenv prompt
@@ -236,9 +240,8 @@ prompt_virtualenv() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
     local user=`whoami`
-
     if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
-        prompt_segment black default "$user@\h"
+      prompt_segment grey default "$user@\h"
     fi
 }
 
@@ -264,7 +267,7 @@ prompt_git() {
         if [[ -n $dirty ]]; then
             prompt_segment yellow black
         else
-            prompt_segment green black
+            prompt_segment draculagreen grey
         fi
         PR="$PR${ref/refs\/heads\// }$dirty"
     fi
@@ -272,7 +275,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-    prompt_segment blue black '\w'
+    prompt_segment draculapurple black '\w'
 }
 
 # Status:
@@ -365,6 +368,10 @@ prompt_right_segment() {
 
     # right always has a separator
     # if [[ $CURRENT_RBG != NONE && $1 != $CURRENT_RBG ]]; then
+    #     $CURRENT_RBG=
+    # fi
+    declare -a intermediate2=($(fg_color $1) $(bg_color $CURRENT_RBG) )
+    # PRIGHT="$PRIGHT---"
     debug "pre prompt " $(ansi_r intermediate2[@])
     PRIGHT="$PRIGHT$(ansi_r intermediate2[@])$RIGHT_SEPARATOR"
     debug "post prompt " $(ansi_r codes[@])
@@ -412,7 +419,6 @@ build_prompt() {
     prompt_dir
     prompt_git
     prompt_end
-    prompt_inputline
 }
 
 # from orig...
